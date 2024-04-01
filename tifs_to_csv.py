@@ -16,29 +16,29 @@ def GetTifInfo(filename):
 
 
 def WriteCsv(filename, csv_file):
-    img, height, width, extent = GetTifInfo(filename)
+    img, height, width, extent = GetTifInfo(filename)  # 获取图片的基本信息
     with open(csv_file, 'w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(["Lon", "lat", "value"])
+        writer.writerow(["Lon", "lat", "value"])  # 写入第一行表头
         for row in range(height):
             for col in range(width):
-                value = img[row, col]
-                lon = float(round(col * 0.05 + extent[0], 2))
+                value = img[row, col]  # 读取第row行第col列的值
+                lon = float(round(col * 0.05 + extent[0], 2))  # 计算第row行第col列的经纬度值，转成浮点数
                 lat = float(round(extent[3] - row * 0.05, 2))
-                writer.writerow([lon, lat, float(value)])
+                writer.writerow([lon, lat, float(value)])  # 写入该点的第row行第col列的经纬度值和该点的值
 
 
 def OpenTif(tif_pattern, csv_dir):
     # 使用glob获取所有匹配的文件路径
     tif_files = glob.glob(tif_pattern)
     for tif_file in tif_files:
-        csv_file_time = os.path.splitext(os.path.basename(tif_file))[0]
-        WriteCsv(tif_file, csv_dir + csv_file_time + ".csv")
+        csv_file_time = os.path.splitext(os.path.basename(tif_file))[0]  # 从文件名中获取文件时间
+        WriteCsv(tif_file, csv_dir + csv_file_time + ".csv")  # 写入文件
         print("写入文件:" + csv_file_time + ".csv" + " ,Ok!")
 
 
 if __name__ == '__main__':
     # 设置tif文件的路径模式
-    tif_pattern = "D:\\study\\COD\\*.tif"
-    csv_dir = "D:\\study\\COD_CSV\\"
+    tif_pattern = "D:\\study\\COD\\*.tif"  # tif文件的路径
+    csv_dir = "D:\\study\\COD_CSV\\"  # 存放csv文件的路径
     OpenTif(tif_pattern, csv_dir)
