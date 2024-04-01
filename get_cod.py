@@ -12,7 +12,7 @@ def get_cod(input_lon, input_lat, date):
             for row in reader:  # 按行读取csv数据
                 lon, lat = float(row[0]), float(row[1])  # 转换成浮点类型的数据方便匹配
                 if lon == float(input_lon) and lat == float(input_lat):  # 判断该行经度和纬度是否与输入的经纬度一致
-                    print("时间:" + date + "\n经度:" + row[0] + "\n纬度：" + row[1] + "\n光学厚度：" + row[2])  # 打印时间、经纬度、和该点光学厚度
+                    print("时间:" + date + "\n经度:" + row[0] + "\n纬度：" + row[1] + "\n该点像元灰度值：" + row[2])  # 打印时间、经纬度、和像元的灰度值
                     return None  # 找到之后停止遍历
 
 

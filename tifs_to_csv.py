@@ -8,7 +8,7 @@ def GetTifInfo(filename):
     datafile = gdal.Open(filename)
     im_width = datafile.RasterXSize  # 栅格矩阵的列数
     im_height = datafile.RasterYSize  # 栅格矩阵的行数
-    extent = datafile.GetGeoTransform()  # 仿射矩阵，左上角像素的大地坐标和像素分辨率 extent=(-180.0, 0.05, 0.0, 90.0, 0.0, -0.05)
+    extent = datafile.GetGeoTransform()  # 仿射矩阵，左上角像素的大地坐标和像素分辨率
     img = datafile.GetRasterBand(1).ReadAsArray()  # dataset.GetRasterBand(1) 用于获取数据集的第一个波段，而 ReadAsArray()
     # 方法用于将这个波段的像素数据读取为一个数组。
     datafile = None
@@ -23,7 +23,7 @@ def WriteCsv(filename, csv_file):
         for row in range(height):
             for col in range(width):
                 value = img[row, col]  # 读取第row行第col列的值
-                lon = float(round(col * 0.05 + extent[0], 2))  # 计算第row行第col列的经纬度值，转成浮点数
+                lon = float(round(col * 0.05 + extent[0], 2))  # 计算第row行第col列的经纬度值，转成浮点数，这里我的tif像元大小是0.05
                 lat = float(round(extent[3] - row * 0.05, 2))
                 writer.writerow([lon, lat, float(value)])  # 写入该点的第row行第col列的经纬度值和该点的值
 
